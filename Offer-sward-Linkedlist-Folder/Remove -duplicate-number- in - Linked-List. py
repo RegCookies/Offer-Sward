@@ -1,0 +1,90 @@
+class Lnode:
+    def __init__(self,val): 
+        self.val = val
+        self.next = None
+
+#顺序暴力解法
+
+def remove_dup(head):
+    if head is None and head.next is None:
+        return 
+    
+    outcur = head.next
+    incur = None
+    inpre = None
+    while outcur.next != None:
+        incur = outcur.next
+        inpre = outcur
+        while incur!= None :
+            # Fnd dump number:
+            
+            if incur.val ==  outcur.val:
+                inpre.next = incur.next
+                incur = incur.next 
+            
+            else:
+                inpre = incur
+                incur = incur.next
+            
+        outcur = outcur.next
+
+def recur_remove_dump(head):
+    if head.next is None or head.next is None:
+        return head
+    tmp = None
+    if head.val == head.next.val:
+        tmp = head.next
+        while  tmp.val != None and tmp.val == head.val:
+                tmp = tmp.next 
+        return recur_remove_dump(tmp)
+    else:
+        head.next = recur_remove_dump(head.next)
+        return head
+
+if __name__ == "__main__" :
+    i =1
+    head = Lnode(None)
+    
+    temp =None
+    cur = head
+    
+    while  i <11:
+        temp = Lnode(None)
+        if i%2 == 0:
+            temp.val = i+1
+        if i%3 == 0:
+            temp.val = i+2
+        else:
+            temp.val = i
+
+        temp.next = None
+        
+        cur.next = temp 
+        
+        cur = temp
+        
+        i+=1 
+
+    print("完成之前：")
+    cur = head.next
+    while cur!= None:
+        print(cur.val,end =" ")  
+        cur = cur.next 
+
+    remove_dup(head)
+    
+    print("\ndumplicate after")
+    
+    cur = head.next
+    while cur != None:
+        print (cur.val,end = " ") 
+        cur = cur.next
+    
+    cur1 = None
+    cur1 = recur_remove_dump(head.next)
+    print("\n递归") 
+    
+    while cur1 != None: 
+        print(cur1.val, end = " ")
+        cur1 = cur1.next 
+    
