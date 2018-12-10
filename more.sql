@@ -1,0 +1,1 @@
+SELECT class from courses group by class having COUNT(distinct student) >4; 
